@@ -1,0 +1,14 @@
+dn: uid=##UID##,##OU##,dc=inviqa,dc=com
+uid: ##UID##
+cn: ##CN##
+sn: ##SN##
+mail: ##MAIL##
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+objectClass: ldapPublicKey
+uidNumber: ##UIDNUMBER##
+gidNumber: 20
+homeDirectory: ##HOMEDIRECTORY##
+loginShell: /bin/bash
