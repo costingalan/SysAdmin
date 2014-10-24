@@ -9,12 +9,12 @@ if [ "${check4OD}" == "${oldDomain}" ]; then
 	echo "This machine is joined to ${oldDomain}"
 	echo "Removing from ${oldDomain}"
 	dsconfigldap -r "${oldDomain}"
+	dscl /Search -delete / CSPSearchPath "/LDAPv3/${oldDomain}"
 	dscl /Search/Contacts -delete / CSPSearchPath "/LDAPv3/${oldDomain}"
-	/usr/bin/dscl /Search/Contacts -delete / CSPSearchPath "/LDAPv3/${oldDomain}"
-	echo "Joining the new domain ${newDomain}"
-	/usr/bin/dscl /Search/Contacts -append / CSPSearchPath "/LDAPv3/${newDomain}"
-	dscl /Search/Contacts -append / CSPSearchPath "/LDAPv3/${newDomain}"
 fi
+echo "Connecting to ${oldDomain}"
+dsconfigldap -Na "${newDomain}"
+
 killall DirectoryService
 echo "Finished. Welcome to ${newDomain}"
 exit 0
