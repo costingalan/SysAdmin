@@ -3,16 +3,15 @@
 oldDomain="$1" # Enter the FQDN of your old OD
 newDomain="$2" # Enter the FQDN of your new OD
 # These variables probably don't need to be changed
-check4OD=`dscl localhost -list /LDAPv3 | grep $oldDomain`
-# Check if bound to old Open Directory domain
-if [ "${check4OD}" == "${oldDomain}" ]; then
-	echo "This machine is joined to ${oldDomain}"
-	echo "Removing from ${oldDomain}"
-	dsconfigldap -r "${oldDomain}"
-	dscl /Search -delete / CSPSearchPath "/LDAPv3/${oldDomain}"
-	dscl /Search/Contacts -delete / CSPSearchPath "/LDAPv3/${oldDomain}"
-fi
+
+echo "Removing from ${oldDomain}"
+dsconfigldap -r "${oldDomain}"
+dscl /Search -delete / CSPSearchPath "/LDAPv3/${oldDomain}"
+dscl /Search/Contacts -delete / CSPSearchPath "/LDAPv3/${oldDomain}"
 echo "Connecting to ${oldDomain}"
+ipconfig set en0 DHCP
+ipconfig set en1 DHCP
+ipconfig set en2 DHCP
 dsconfigldap -Na "${newDomain}"
 
 killall DirectoryService
